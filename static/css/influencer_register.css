@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+}
+
+
+#panel{
+    width: 80%;
+    margin: auto;
+    height: 750px;
+}
+
+#input-form{
+    width: 600px;
+    height: 450px;
+    margin: auto;
+    margin-top: 50px;
+    border-radius: 20px;
+}
+
+.checkbox{
+    display: flex;
+    gap: 20px;
+}
+
+.already{
+    display: flex;
+}

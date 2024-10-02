@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Influencer Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/sponsor_dash.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <div id="container">
+        <div id="panel">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid d-flex justify-content-between align-items">
+                    <div>
+
+                        <h4>{{influencer.f_name}} {{influencer.l_name}}'s Dashboard</h4>
+                    </div>
+                    <div>
+
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page"
+                                        href="/dashboard/influencer/{{influencer.influ_id}}">Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page"
+                                        href="/dashboard/influencer_stat/{{influencer.influ_id}}">Stats</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="container-fluid " style="margin-left: 35px;">
+                <form class="d-inline-flex p-2 bd-highlight" action="/influencer/search/{{influencer.influ_id}}">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                        id="search_word" , name="search_word">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+            <div class="camp">
+                {%if influencer.flagged==False%}
+                <div class="request">
+                    <h4>All Campaigns</h4>
+                    {% if camp %}
+                    {% for key, value in camp.items() %}
+                    {%if value[2]=="private" and value[3]==influencer.niche%}
+                    <div class="request_1">Campaign: {{value[0]}} || Sponsor: {{value[9]}} || Description {{value[8]}}
+                        <div class="btn0">
+                            {%if value[7]==True %}
+                            <a href="" type="button" class="btn btn-outline-danger">Campaign is Flagged</a>
+                            {%elif value[10] == True%}
+                            <a href="" type="button" class="btn btn-outline-danger">Sponsor is Flagged</a>
+                            {%else%}
+
+                            <a href="#" type="button" class="btn btn-outline-info" data-bs-toggle="modal"
+                                data-bs-target="#ViewCampaignModal"
+                                data-val="{{value[0]}}#{{value[1]}}#{{value[2]}}#{{value[3]}}#{{value[4]}}#{{value[5]}}#{{value[6]}}#{{value[8]}}">View</a>
+                            <a href="#" type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                                data-bs-target="#addAdModal"
+                                data-val="{{influencer.influ_id}}#{{key}}#{{value[0]}}">Send Request</a>
+                            {%endif%}
+                        </div>
+                    </div>
+                    {%elif value[2]=="public"%}
+
+                    <div class="request_1">Campaign: {{value[0]}} || Sponsor: {{value[9]}} || Description {{value[8]}}
+                        <div class="btn0">
+                            {%if value[10] == True%}
+                            <a href="" type="button" class="btn btn-outline-danger">Sponsor is Flagged</a>
+                            {%elif value[7]==True %}
+                            <a href="" type="button" class="btn btn-outline-danger">Campaign is Flagged</a>
+                            {%else%}
+                            <a href="#" type="button" class="btn btn-outline-info" data-bs-toggle="modal"
+                                data-bs-target="#ViewCampaignModal"
+                                data-val="{{value[0]}}#{{value[1]}}#{{value[2]}}#{{value[3]}}#{{value[4]}}#{{value[5]}}#{{value[6]}}#{{value[8]}}">View</a>
+                            <a href="#" type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                                data-bs-target="#addAdModal"
+                                data-val="{{influencer.influ_id}}#{{key}}#{{value[0]}}">Send Request</a>
+                            {%endif%}
+                        </div>
+                    </div>
+                    {%endif%}
+                    {% endfor %}
+                    {%else %}
+                    <div class="request_1">No campaign Available</div>
+                    {%endif%}
+                    {%else%}
+                    <he class="request_1">You've Been Flagged. Not allowed to view Campaigns</h3>
+                        {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- View Campaign Modal -->
+    <div class="modal fade" id="ViewCampaignModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Campaign</h5>
+                </div>
+                <div class="modal-body">
+                    <label for="camp_name">Campaign Name</label>
+                    <input type="text" class="form-control" name="camp_name" id="camp_name"
+                        placeholder="Enter campaign name(can't edit in future)" readonly>
+
+                    <label for="goals">Goals:</label>
+                    <input type="text" class="form-control" name="goals" id="goals" readonly>
+
+                    <label for="visibility">Visibility</label>
+                    <select name="visibility" id="visibility" disabled>
+                        <option value="public" selected>Public</option>
+                        <option value="private">Private</option>
+                    </select>
+
+                    <label for="niche">Niche: </label>
+                    <select name="niche" id="niche" disabled>
+                        <option value="select" selected>Choose your Niche</option>
+                        <option value="fashion">Fashion</option>
+                        <option value="fitness">Fitness</option>
+                        <option value="travel">Travel</option>
+                        <option value="spiritual">Spiritual</option>
+                        <option value="food">Food</option>
+                        <option value="gaming">Gaming</option>
+                        <option value="education">Education</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="art">Art</option>
+                    </select>
+                    <br>
+
+                    <label for="budget">Budget:</label>
+                    <input type="number" class="form-control" name="budget" id="budget" placeholder="Enter budget"
+                        readonly>
+
+                    <label for="start_date">Start Date: </label>
+                    <input type="date" class="form-control" name="start_date" id="start_date" readonly>
+
+                    <label for="end_date">End Date: </label>
+                    <input type="date" class="form-control" name="end_date" id="end_date" readonly>
+
+                    <label for="description">Description: </label>
+                    <textarea class="form-control" name="description" id="description" maxlength="100" rows="4"
+                        placeholder="Campaign Description(maximum 300 characters)" readonly></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        $('#ViewCampaignModal').on("show.bs.modal", function (event) {
+            // Pass the campaign data to the modal
+            var data = $(event.relatedTarget).data('val');
+            var values = data.split('#')
+            $(this).find('#camp_name').val(values[0]);
+            $(this).find('#goals').val(values[1]);
+            $(this).find('#visibility').val(values[2]);
+            $(this).find('#niche').val(values[3]);
+            $(this).find('#budget').val(values[4]);
+            $(this).find('#start_date').val(values[5]);
+            $(this).find('#end_date').val(values[6]);
+            $(this).find('#description').val(values[7]);
+
+        })
+    </script>
+
+
+    <!-- Create Ad req modal -->
+
+    <form action="/advertisment/add/{{influencer.influ_id}}" method="POST">
+        <div class="modal fade" id="addAdModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Create Ad Req</h5>
+
+                    </div>
+                    <div class="modal-body">
+                        <label for="camp_id">Campaign id</label>
+                        <input type="text" class="form-control" name="camp_id" id="camp_id" readonly>
+
+                        <label for="camp_name">Campaign Name</label>
+                        <input type="text" class="form-control" name="camp_name" id="camp_name" readonly>
+                        <br>
+                        <label for="requirment">Requirement</label>
+                        <textarea class="form-control" name="requirment" id="requirment" required></textarea>
+
+                        <label for="payment">Charges</label>
+                        <input type="number" class="form-control" name="payment" id="payment" required>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-outline-success">Send Req</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        $("#addAdModal").on("show.bs.modal", function (event) {
+            var st = $(event.relatedTarget).data('val');
+            var values = st.split('#');
+            $(this).find('#influ_id').val(values[0]);
+            $(this).find('#camp_id').val(values[1]);
+            $(this).find('#camp_name').val(values[2]);
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsor Registration</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/influencer_register.css">
+</head>
+
+<body>
+    <div id="container">
+        <div id="panel">
+            <div id="input-form">
+                <h1>Sponsor Register</h1>
+                <form  action="/sponsor_register" method="POST">
+                    <div class="mb-3">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" name="name" id="name" 
+                            placeholder="Enter name here" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="username">User Name</label>
+                        <input type="text" class="form-control" name="uname" id="username" aria-describedby="userHelp" 
+                            placeholder="Enter your user name here" >
+                        <div class="userHelp" class="form-text">We'll never share your username with anyone else</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pass">Password</label>
+                        <input type="password" class="form-control" name="pass" id="pass" placeholder="Password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmpass">Confirm Password</label>
+                        <input type="password" class="form-control" name="cpass" id="confirmpass" placeholder="Confirm Password">
+                    </div>
+                         <div class="mb-3">
+                        <label for="industry">Industry: </label>
+                        <select name="industry" id="industry">
+                            <option value="select" selected>Choose your Industry</option>
+                            <option value="fashion">Fashion</option>
+                            <option value="fitness">Fitness</option>
+                            <option value="travel">Travel</option>
+                            <option value="spiritual">Spiritual</option>
+                            <option value="food">Food</option>
+                            <option value="gaming">Gaming</option>
+                            <option value="education">Education</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="art">Art</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <div class="already">
+                        <div>Already a Sponsor?</div>
+                        <a href="/">Login</a>
+                    </div>
+                    <br>{{ msg }}
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

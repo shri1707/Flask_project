@@ -1,0 +1,27 @@
+.camp{
+    margin: 50px;
+    margin-bottom: 40px;
+}
+
+
+.active_camp{
+    display: flex;
+}
+
+h2{
+    padding: 10px 20px;
+    margin: 1px;
+}
+.active_camp_1, .request_1{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    margin: 1px;
+    background-color: rgb(246, 229, 208);
+    border-radius: 5px;
+}
+
+.btn0{
+    padding: 0;
+}

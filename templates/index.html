@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Influencer/Sponsor</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+<body>
+    <div class="main">
+        <h1>Welcome!</h1>
+        <form  action="/" method="POST">
+            <h2>Login here</h2>
+            <div class="form-row">
+
+                <label for="who">User/Admin: </label>
+                <select name="type" id="who" >
+                    <option value="admin">Admin</option>
+                    <option value="sponsor">Sponsor</option>
+                    <option value="influencer">Influencer</option>
+                </select>
+            </div>
+            <div class="form-row">
+
+                <label for="username">Username: </label>
+                <input type="text" name="username" id="username" placeholder="Enter Username">
+            </div>
+            <div class="form-row">
+
+                <label for="pass">Password: </label>
+                <input type="password" name="pass" id="pass" placeholder="Enter password">
+                
+            </div>
+            <div class="form-row">
+
+                <button type="submit" class="login">Login</button>
+            </div>
+            <br>{{ msg }}
+        </form>
+        <div class="new_user">
+            <h2 class="statement">New User? Register here</h2>
+            <div class="btn">
+
+                <a href="/influencer_register" class="influencer">Influencer</a>
+                <a href="/sponsor_register" class="sponsor">Sponsor</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
